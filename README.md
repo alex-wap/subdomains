@@ -1,7 +1,7 @@
 # Multiple Subdomains Tutorial
 
 
-This tutorial teaches developers how to deploy multiple apps to the same AWS EC2 instance and how to configure subdomains. (Node and [Pylot](https://github.com/Ketul-Patel/Pylot/tree/development) apps)
+This tutorial teaches developers how to deploy multiple apps to the same AWS EC2 instance using Nginx as a reverse proxy and how to configure subdomains. (Node and [Pylot](https://github.com/Ketul-Patel/Pylot/tree/development) apps)
 
 ---
 
@@ -145,4 +145,7 @@ sudo start PROJECT
 
 ---
 
-## 7. Congratulations! We're done! Test out your domain and subdomains.
+## 7. Congratulations! We're done!
+
+
+Note: It may take some time for subdomains to propagate (up to 24 hours). Be sure to test out the domain and subdomains.
