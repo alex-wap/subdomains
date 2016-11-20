@@ -18,19 +18,18 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 ```javascript
 var server = app.listen(8001);
 ```
-
 ### Pylot: The port must be modified in both manage.py and wsgi.py.
 #### manage.py:
 ```python
 manager.add_command('runserver', Server(host='127.0.0.1',port='5001'))
+# NOTE: port must be a string.
 ```  
-**NOTE:** port must be a string.
 
 #### wsgi.py: 
 ```python
 application.run(host='127.0.0.1',port=5001)
+# NOTE: port must be an integer.
 ```  
-**NOTE:** port must be an integer. 
 
 
 3.
