@@ -7,7 +7,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 # Instructions
 
 
-## 1. First, you will need to configure at least one application for deployment. Follow the instructions below for the corresponding app type.
+## 1. First, you will need to configure at least one application for deployment. Follow the instructions below for the corresponding type of app.
 
   * [Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
 
@@ -35,7 +35,10 @@ application.run(host='127.0.0.1',port=5001)
 ```  
 ---
 
-3.
+## 3. Deploy the rest of your apps on the existing AWS EC2 instance.
+
+#### Node: Typically, the port is specified in the server.js file or a settings.js file using
+
 4.
 5.
 6.
