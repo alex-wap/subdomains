@@ -1,0 +1,752 @@
+<html>
+
+<style>
+	pre {
+		background-color: lightgreen;
+	}
+
+	.new_project {
+		background-color: lightblue;
+	}
+</style>
+
+<body>
+
+
+	<h1>Deployment Basics</h1>
+	<p>
+		In this section we'll cover why learning to deploy is important, what is is, and the basic theory behind it.
+	</p>
+	<h2>Why Should I Learn to Deploy?</h2>
+	<p>
+		In most cases, if you work as a Web Developer, you probably will not be the one to deploy your company's application. Why? Because there are people who build their entire careers around deploying applications. However, for us here are a few reasons why
+		you would want to deploy:
+	</p>
+	<ol>
+		<li><strong>Your Portfolio</strong>&nbsp;- it will be quite important to have a portfolio that has pieces that can be shown to recruiters/interviewers. They should actually be on the web. You would never want to say something like "let me just start up
+			my localhost server".</li>
+		<li><strong>Working Knowledge</strong>&nbsp;- often when we follow up with interviewers, one comment we've received in the past is that students didn't have a solid understanding of deploying web applications. It is a highly desirable skill in case you
+			end up being the only engineer at a young start-up. Also, this knowledge will help you integrate with a team that potentially has a lot of moving pieces.</li>
+		<li><strong>The Extra Mile </strong>&nbsp;- after you've created all the client and server-side components, actually deploying your app is really the capstone to this process. There is nothing like seeing your site up and running on a domain that you've
+			purchased.
+		</li>
+	</ol>
+	<h2>Where and How do I Deploy?</h2>
+	<p>
+		There are many services that assist with deploying out there. One great resource that we will point you to is Heroku. However, the skill that is more often sought out is the ability to deploy a web application from scratch.
+	</p>
+	<h4>In the Cloud</h4>
+	<p>
+		You may have already heard of "deploying apps to the cloud" what this basically means is setting up your application on a "blank" machine that will serve to anyone who sends requests to the server running on that machines. In our case, we will be using
+		Amazon's EC2 (Elastic Cloud Computing) Service to set up said blank machine with your applications to be available to the world.
+	</p>
+	<p>
+		Now that you've had a brief introduction let's get started deploying your Pylot project!
+	</p>
+	<h1>Servers</h1>
+	<h3>What is a server?</h3>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		Servers are computers just like the one you're on right now reading this document. That being said, there are some differences, your computer is designed to be able to handle many things, from graphics rendering&nbsp;to storage, video playback and much
+		more. On the other hand, the server (typically) has been built with much more processing speed, storage, and RAM, because it's sole purpose is to serve files to a client, hence why they call them servers.
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		If you go to www.codingdojo.com, your computer actually does what we call a "request" to the computer at CodingDojo. Once your computer reaches CodingDojo with this "request", our CodingDojo server will serve you a bunch of files (this is called the "response"),
+		which in return your computer will take those files (usually HTML, CSS, and JavaScript files) and give them to your browser of which will make sense of them and give you what now looks like the CodingDojo website.&nbsp;
+	</p>
+	<h3>Restaurant</h3>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		So imagine you've gone to a restaurant and you've just been seated at your&nbsp;table. Your waiter comes to take your order and is listening for your order. You look through the menu and you finally decide on what to order. The waiter then takes your
+		order to the kitchen where the order is then passed on to the kitchen. As in most kitchens, the chefs will need to prep the ingredients. To do this, they will have to go to the refrigerator where all the food is stored. The chefs get the ingredients
+		then prepare and cook the food to be served to you as you've waited for your food.
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		<strong>Web Server Components</strong>
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		The components of servers are easily understood through the restaurant analogy. First, consider the entire restaurant as the server that you learned about above. Now onto each component:
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		1)&nbsp;<strong>Web Server</strong>&nbsp;- Think of this as the first step in processing your order. The Web Server will listen for and receive all the requests that users make. Your order is the parallel of requests which we talked about earlier.
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		2)&nbsp;<strong>Interpreter</strong>&nbsp;- These are the chefs who will take the orders from the waiter. The Interpreter will receive the request from the Web Server and then take the necessary steps - that is, run through the logic or retrieve content
+		from the Database just like chefs grab the ingredients from the refrigerator and then prepare the meal.
+	</p>
+	<p class="p3" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		3)&nbsp;<strong>Database</strong>&nbsp;- is like the refrigerator which is the store for all of the ingredients. The Database is simply a file or a container for document storage like your computer's hard-drive. Its sole purpose is to store files, update
+		files, and retrieve files for the interpreter.&nbsp;
+	</p>
+	<p class="p2" style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		So as you can imagine, the Web-server will ask the Interpreter to retrieve him a page of content, the Interpreter will realize it needs something from the database, so it will ask the database for that file, the database will find that file, and give
+		it to the interpreter, of which then the interpreter will take the file, organize it and send it back to the web server to respond to that initial request, in this example, your request.
+	</p>
+	<h1>EC2 | Intro</h1>
+	<p>
+		While there are many services out that provide services deploying applications, we'll be using Amazon EC2. This awesome service provides easily scalable computers and capacity in the cloud that makes deployment and serving up applications easy. Also,
+		the lowest-tier servers are free which are ideal for testing and learning to deploy!
+	</p>
+	<h2>Getting Started</h2>
+	<p>
+		Before we get started, make sure you have signed up for AWS Free Tier. If you haven't gone to this link&nbsp;&nbsp; <a href="http://aws.amazon.com/free/" target="_blank" style="color: rgb(68, 68, 68);">http://aws.amazon.com/free/</a>and sign up.&nbsp;AWS
+		requires you to provide a Credit Card during sign up, but don't worry; AWS will only charge you if you purchase non-free services. AWS will not charge you as well upon signing up.
+	</p>
+	<h2>Road Map</h2>
+	<h4>1. Launch an Amazon EC2</h4>
+	<p style="margin-bottom: 5px; padding-top: 5px; padding-bottom: 5px; width: auto; word-wrap: break-word; line-height: 18px; border-width: medium;">
+		We are going to buy a computer owned by Amazon that runs the operating system called Ubuntu.&nbsp;We have been using our own computer, localhost, to host our applications for us. Our computer was not designed to be a server, it was designed to be a client.
+		For our application to handle a lot of traffic, we need to buy a computer that was made for being a server. We can choose what kind of computer to buy: how powerful it is and what operating system it is running. We might not literally be buying an entire
+		computer. Amazon has some powerful computers that can run multiple high traffic applications so we might just be sharing a computer with other applications.&nbsp;
+	</p>
+	<p>
+		Note: In this chapter, we will demonstrate how to run a "Free" instance. Amazon EC2 offers up to 1 year of free use so that programmers like us can enjoy the free service :)
+	</p>
+	<h4>2. Connect to our EC2 instance</h4>
+	<p>
+		We are going to access this computer that we bought using either a Mac or a PC.&nbsp;How do we access this computer that we bought? It would suck to have to drive all the way to wherever you bought your computer to access it. What do we mean by access?
+		For example, when you open up your terminal, you can access the files from your own computer. Fortunately, we can use our own terminal (Command Prompt for windows) to connect to the computer that we bought. It is as if we are accessing the terminal
+		from that computer! It's like...we are there...
+	</p>
+	<h4>3. Install</h4>
+	<p>
+		We are going to download necessary programs to this computer that we bought (i.e. web server, database). Think of your EC2 instance as a computer with just the operating system installed in it. In order to get our project up and running our new server
+		instance, we'll actually have to install the necessary software. We will replicate the development environment on your computer to the server so that the application will run properly both there and your localhost.
+	</p>
+	<h4>4. Point&nbsp;</h4>
+	<p>
+		We are going to register our domain name to point to the IP address of this computer that we bought from Amazon. Now whenever someone requests our domain name, the request will look at the address book, and know which IP address to go to.
+	</p>
+	<h1>EC2 | Creating a Server Instance</h1>
+	<p>
+		To get started with EC2, head over to&nbsp;<a href="http://aws.amazon.com">aws.amazon.com</a> and create an account if you haven't already. If you already have an amazon account you might already have an account. Once you've done that sign-in to the
+		AWS Console.
+	</p>
+	<h4>***Follow the rest of the commands in this chapter very, very carefully***</h4>
+	<h2>AWS Console</h2>
+	<p>
+		AWS (Amazon Web Services) offer a bunch &nbsp;of services, but the one that interests us is EC2. At your console, you'll want to find and click the icon that looks like this:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3688_ec2-console.png">
+	</p>
+	<p>
+		Next we're going to want to create a new EC2 Server Instance, we can do so by clicking this button:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3689_launch.png">
+	</p>
+	<h3>Step 1: Choose an Amazon Machine Image (AMI)</h3>
+	<p>
+		We'll then see a listing of different types of servers. The listing describes all the different type of Operating Systems that we can have preinstalled on our server machines. For our purposes, <strong>we will always want a Linux Based environment in which we will use Ubuntu as the OS&nbsp;</strong>so
+		find the server that matches this image and then, click "Select":
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3690_ubuntu.png">
+	</p>
+	<h3>Step 2: Choose an Instance Type</h3>
+	<p>
+		For our purposes, we will use the free t2.micro instance type to deploy our Django project
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3691_instance-type.png">
+	</p>
+	<p>
+		We're not going to change any of the default configurations so look towards the bottom of the page and click:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3692_review-launch.png">
+	</p>
+	<h3>Step 6&nbsp;(not a mistake): Configure Security Groups</h3>
+	<p>
+		Make sure you have these ports included
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_3227/handouts/chapter3227_5354_Screen-Shot-2016-01-25-at-3.16.29-PM.png">
+	</p>
+	<h3>Step 7 (not a mistake): Review Instance Launch</h3>
+	<p>
+		Once you've finished step 2, you'll immediately jump to step 7. Look toward the bottom right and click the button that reads "Launch" and a modal should pop up. In the first option, select <strong>"Create a new key pair"</strong>:&nbsp;Next, in the
+		<b style="background-color: initial;">Key Pair name</b> field, add a name for your key pair. We will be deploying a copy of the Product Catalog assignment so let's input&nbsp;&nbsp;'product_catalog' into the field.&nbsp;Your modal should look like this:
+	</p>
+	<p>
+		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3694_key-pair.png" style="width: 439px;"
+						alt="">
+	</p>
+	<h4><strong>Downloading the Key Pair</strong></h4>
+	<p>
+		Now go ahead and click the "Download Key Pair". Your Key Pair file should automatically download into your Downloads folder.&nbsp;This will be a file that we use to actually gain access to our newly created server instance.&nbsp;You can name it anything
+		you want, but we like to name them something that is relevant to the project that we are working on which is why we called it 'product_catalog'.&nbsp;
+	</p>
+	<p>
+		In your Downloads folder, you'll see a file ending with&nbsp;<strong>.pem</strong>&nbsp;extension type.<strong> Put this file in a safe place and do not delete it, the Downloads folder or your project folder probably aren't</strong><strong style="background-color: initial;">&nbsp;the best ideas. You will not be able to access your server and will have to terminate your server instance and restart this process all over otherwise.</strong>
+	</p>
+	<h4><strong>Launching</strong><strong style="background-color: initial;">&nbsp;Your Instance</strong></h4>
+	<p>
+		Click the 'Launch Instance', you should see a page like this:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3695_launch-status.png">
+	</p>
+	<p>
+		Congratulations you've just launched your EC2 server!!!!! :)&nbsp;
+	</p>
+	<p>
+		Finally, click 'View Instances' to see you running EC2 Instance
+	</p>
+	<h1>Server Access</h1>
+
+	<pre>Light green lines - needed for initial setup</pre>
+	<pre class='new_project'>Light blue lines - for changing projects</pre>
+
+	<p>
+		Now that we've set up our server instance we'll need to access it. This functionality is built right into your terminal! Woah :O
+	</p>
+	<p>
+		Go onto EC2 look at your server instance, you can go ahead and change the name of the server instance we just created. But more importantly,&nbsp;identify the Public IP Address. It should appear in the EC2 Dashboard like this:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3697_public-ip.png" style="width: 696px;">
+	</p>
+	<h2>Secure Shell</h2>
+	<p>
+		Now that you know your public IP address, open up your terminal and navigate to the folder where you saved your <strong>.pem</strong> file.
+	</p>
+	<p>
+		Run the following command in the terminal. This will change the user permissions of the file so we can use it to access our server:
+	</p>
+	<pre>
+chmod 400 name_of_pem_file.pem
+</pre>
+	<p>
+		After that, we are ready to access our server and we'll do so with this command:
+	</p>
+	<pre>
+ssh -i name_of_pem_file.pem ubuntu@your.public.ip_address.here
+</pre>
+	<p>
+		The terminal will then prompt with a response that looks like this:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3698_yes.png">
+	</p>
+	<p>
+		Type <em>yes</em>&nbsp;to continue and you'll see some information about your server and you have now accessed your server if you see a prompt:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3699_ubuntu-prompt.png">
+	</p>
+	<h3>Starting and Ending the Session</h3>
+	<p>
+		Now if you want to leave this secure shell session you simply have to close your terminal window. Otherwise, to ssh into your server again run this again from the directory in which your <strong>.pem </strong>file is located:
+	</p>
+	<pre class='new_project'>
+ssh -i name_of_pem_file.pem ubuntu@your.public.ip_address.here
+</pre>
+	<h1>Package Installation</h1>
+	<p>
+		Now that we've launched and can access our server, let's go ahead and setup our production environment by installing the necessary packages to get our Pylot project up and running.We will install pip, the python package manager, we should be pretty acquainted
+		with this by now. We'll then go ahead and install python-dev, nginx as well as some other modules that will setup our environment. You might be thinking to yourself, why didn't we have to install all these dependencies in our local environment to get
+		Pylot working. This is because we are working with a completely clean linux environment, for the most part the only thing we have available to us is the apt-get package manager that comes with linux. Python doesn't come preinstalled so we have to install
+		it ourselves.&nbsp;
+	</p>
+	<p>
+		Update Ubuntu Packages to get the latest versions
+	</p>
+	<pre>
+sudo apt-get update
+</pre>
+	<p>
+		2. Install the packages that we will need
+	</p>
+	<pre>
+sudo apt-get install python-pip python-dev nginx git build-essential libffi-dev
+</pre>
+	<pre>
+sudo apt-get install libmysqlclient-dev
+</pre>
+	<pre>
+sudo apt-get install uwsgi
+</pre>
+	<p>
+		Type <em>yes </em>when prompted for installation which shouldn't take long. The&nbsp;command above installed:
+	</p>
+	<ul>
+		<li>pip - which we've used before to install python modules</li>
+		<li>other python development files that we'll used to set up our web server</li>
+		<li>the Nginx web server</li>
+		<li>install git to grab your project from GitHub</li>
+	</ul>
+	<h1>git &amp; virtualenv</h1>
+	<h3>Git to Deploying</h3>
+	<p style="line-height: 18px;">
+		When we create a new EC2 instance, we'll probably not be deploying a brand new Pylot project. Most likely, we'll be deploying a project that we've finished developing. To do this on our server, we'll be using&nbsp; <strong>git&nbsp;</strong>which you
+		should already know about.
+	</p>
+	<p style="line-height: 18px;">
+		So let's imagine that we've been using git throughout one of our projects and we've pushed our master branch up to GitHub. We can put that project on our EC2 server using the git tools we installed earlier. Before pushing up to the master branch on your
+		GitHub make sure to export your database file as a script, using mysql workbench and including it in your project. You will be using this script file to reconstruct your database on the cloud.&nbsp;
+	</p>
+	<h2>Using git to Deploy to the Cloud</h2>
+	<p style="line-height: 18px;">
+		Navigate to the root directory of your EC2 server:
+	</p>
+	<pre>
+cd
+</pre>
+	<p style="line-height: 18px;">
+		the&nbsp; <i style="font-weight: bold;">cd&nbsp;</i>command without any file after will take you to the root directory.&nbsp;In the prompt, you should see the&nbsp;<strong>~</strong>&nbsp;which signifies your root directory. Otherwise, on our EC2 instances,
+		our root folder will be named&nbsp;<strong><em>ubuntu</em></strong>
+	</p>
+	<p style="line-height: 18px;">
+		At this point, your root directory should be empty, but you can now run:
+	</p>
+	<pre class='new_project'>
+git clone &lt;git repo&gt (for pylot projects: git clone -b development https://__githuburl__);
+</pre>
+	<p>
+		We'll now be setting up our environment the same way we would have locally.&nbsp;
+	</p>
+	<h3>Installation</h3>
+	<p>
+		To install virtualenv, we'll be using <strong><em>pip</em></strong> the handy, python package manager. Type this command to install:
+	</p>
+	<pre>
+sudo pip install virtualenv
+</pre>
+	<h3>A virtualenv of your own</h3>
+
+<b>Make sure you're not using the virtual environment from your local machine.</b> If there is a pylotVenv folder inside of your directory that came from your local machine, make sure to remove it first before continuing.
+
+	<p>
+		Once successfully installed, we can set up the virtualenv for our project. Navigate into the directory of your project, and now that we're in the project directory, create a Python virtual environment by typing:
+	</p>
+	<pre class='new_project'>
+python setup.py
+</pre>
+<p>If the above gives an error, try the following instead:</p>
+	<pre class='new_project'>
+. setup OR sudo . setup OR source setup
+</pre>
+	<p>
+		and follow the installation instructions that will print into the terminal. We are creating a virtual environment, just like we've been doing on our local computer, activating that environment, and doing some installations.
+	</p>
+	<p>If you're already in your virtual environment, skip this next step.</p>
+	<pre class='new_project'>
+python setup.py (notice if the instructions require to re-run this in the virtual environment, i.e. if you're using the development branch.)
+</pre>
+	<p>
+		Before moving on, lets make sure that our virtual environment was set up correctly, you should see something similar in your own console:
+	</p>
+	<pre class='new_project'>
+(myproject_env)ubuntu@ip-172-31-33-212:
+</pre>
+	<p>
+		With that done, we should have your project uploaded to your AWS instance and successfully created a virtual environment with all of your projects dependencies installed.&nbsp;
+	</p>
+	<h3></h3>
+	<h3>To sudo or not to sudo</h3>
+	<p>
+		This is a good time to go over what's actually happening if instead of just running pip install we run sudo pip install. When you run sudo pip install from within your virtual environment, it installs those python modules globally instead of within your
+		virtual environment.&nbsp;This is a bug that a lot of students run into when deploying. You will see later on that we are going to point our web server at this virtual environment folder and if we don't have all of our dependencies installed on our
+		local virtual environment our server will fail. After setting up your database I suggest coming back to your folder and trying to run your server from within your virtual environment.&nbsp;
+	</p>
+	<h1>MySQL DB Set Up</h1>
+	<p>
+		Jumping straight in, we'll create a <em>mysql&nbsp;</em>database and database user for our Pylot application. After running the command below, set your mysql password for root as root, unless you have set a different password for your database from
+		within your project. Then let's just make sure that we were able to install it correctly. The second command should sign you into your mysql server.&nbsp;
+	</p>
+	<pre>
+sudo apt-get install mysql-server
+</pre>
+	<p>
+		Then let's just make sure that we were able to install it correctly. First we're going to switch over to root user and then the second command should sign you into your mysql server.&nbsp;
+	</p>
+	<pre>
+sudo su (needed to setup password, usually run only on initial setup)
+</pre>
+<p>
+	The su command stand for "switch user". If we don't specify a user, Linux/Unix defaults to root user, which is the administrative user. This command provides access to everything in your system, and therefore can be dangerous if you aren't familiar with the effect of the commands you're using. Be careful not to type any commands other than the following until we exit root user a little later.
+</p>
+
+<pre class='new_project'>
+mysql -u root -p
+</pre>
+	<p>
+		You'll see the mysql prompt where we can set up our database.
+	</p>
+	<h2>Create the Database</h2>
+	<p>
+		The first thing we'll do is create a the database for our project. Note, <strong>every command must end with a semi-colon</strong>. Make sure to check for
+		them if you have any errors or your commands do not run. Now to create a database on our <em>mysql&nbsp;</em>server
+	</p>
+	<pre class='new_project'>
+CREATE DATABASE myproject; (if your sql script includes 'create database', skip this step)
+</pre>
+Essentially, <b>'myproject' should be replaced with the database name inside of your database.py file.</b> If you get a '502 Bad Gateway' error later on, check that your database.py file has the same database name that you've set here.
+	<p>
+		exit the mysql prompt by typing:
+	</p>
+	<pre class='new_project'>
+exit;
+</pre>
+	<p>
+		Run Sql Script
+	</p>
+	<p>
+		Make sure that you have exported your database using mysql workbench and just put a copy of that exported file within in the root directory of your project before pushing it up to your github. Once you have made sure to do that, from within your root
+		directory on your amazon instance you should be able to run that script, which will create your database as well as your tables. Running this next command will prompt you for your password that you set earlier when you installed mysql server.&nbsp;
+	</p>
+	Do only <b>one</b> of the following two commands, depending on if your script includes 'create database':
+	<pre class='new_project'>
+mysql -u root -p < myproject.sql (will cretae your db and tables)
+mysql -u root -p myproject < myproject.sql (if your script didn't include 'create database')
+</pre>
+<b>'myproject.sql' should be replaced with your .sql file.</b>
+	<p>
+		Now, that we have ran our scripts, lets log onto our database and make sure that our database has been created. We will reopen our mysql server and check to see that our tables we're created as well.&nbsp;
+	</p>
+	<pre class='new_project'>
+mysql -u root -p
+show databases;
+use myproject;
+show tables;
+</pre>
+	<p>
+		After running all of the previous commands you should see all of your tables, if they are not present make sure to go back and re run the mysql script file and check the contents of the script file to make sure they look correct.&nbsp;
+	</p>
+	<p class='new_project'>
+		Exit out of the MySQL prompt again: exit;
+	</p>
+<p>After you've left the mysql prompt, type:</p>
+		<pre>
+exit
+</pre>
+	<p>
+		You are no longer signed in as root user. <b>Do not skip this step.</b> Remaining signed in as root user can effect permissions later in the process.
+	</p>
+
+<h1>Changing Database Settings</h1>
+
+<p>
+	Make sure that you're in your project folder
+</p>
+<pre class='new_project'>
+cd /project_name
+</pre>
+<p>
+	Now we're going to make sure your database settings are correct.
+</p>
+<pre class='new_project'>
+sudo nano app/config/database.py
+</pre>
+<p class='new_project'>
+	Now, change DB_PORT to 3306.
+</p>
+<p>
+	Confirm that your database name is correct, and that you did not change it during installation.
+</p>
+<p>
+	If you set a password other than root when you installed mysql, change the password setting in this document.
+</p>
+	<h1>WSGI Setup</h1>
+	<h2>What is WSGI?</h2>
+	<p>
+		Now we're going to be checking out our WSGI entry point.&nbsp;
+		<strong>WSGI</strong>&nbsp;stands for&nbsp;<strong>Web Server Gateway Interface</strong>&nbsp;and it allows a web server to interact with a web framework - like Pylot!&nbsp;We've created the WSGI file for you but know that the main purpose of this file
+		is to tell our web server how to interact with our application. Here is the file with some comments for to read - note the file is included with your Pylot application:
+	</p>
+	<div>
+		<strong>wsgi.py</strong>
+	</div>
+	<pre data-language="python">
+from system.init import initialize_app
+import subprocess
+application = initialize_app()
+if __name__ == "__main__":
+	application.run(host='127.0.0.1')
+</pre>
+	<p>
+		&nbsp;The main objective of this file is to start up our Pylot server. This file should be inside of the root directory of our project.&nbsp;
+	</p>
+	<h2>Testing the WSGI file</h2>
+	<p>
+		We will be going over how to set up our uWSGI server in the next section, and point it to this WSGI entry point. This is a good place to test whether everything is working the way it should be up to this point. <b>Make sure that your virtual environment
+		is activated</b> and run these two commands from your root directory.&nbsp;
+	</p>
+	<pre class='new_project'>
+(venv) $ python manage.py runserver
+</pre>
+	<pre class='new_project'>
+(venv) $ python wsgi.py
+</pre>
+	<p class='new_project'>
+		type deactivate to exit the virtualenv
+	</p>
+	<p>
+		Running the above commands should have started your server, if at this point either of these commands failed, we suggest addressing those issues before moving on. For the most part issues here are linked to pip module dependencies that you didn't add
+		to your dependencies.txt file, or not setting up the database correctly. Make sure to read the errors being displayed on the terminal carefully.
+	</p>
+	<h1>
+</h1>
+	<h1>Uwsgi Configuration</h1>
+	<h2>Uwsgi File Configuration</h2>
+	<p>
+		Go Let's create a uWSGI configuration file. We're going to create this in our project directory. In this case, let's call it the name of our project, I&nbsp;recommend&nbsp;calling it whatever your project is called.&nbsp;
+	</p>
+	<pre class='new_project'>
+$ sudo nano ~/myproject/myproject.ini
+</pre>
+	<p>
+		The inside of this file might be a little difficult to understand, but it's really not overly complicated once we go through it.
+	</p>
+	<p>
+		We're going to start off with the [uwsgi] header so that uWSGI knows to apply the settings that are inside of this file. We're also going to point this file to our wsgi.py file that we should also have in our root directory, without the&nbsp;extension.
+		So far we have.&nbsp;
+	</p>
+	<p>
+		<strong>~/myproject/myproject.ini</strong>
+	</p>
+	<pre class='new_project'>
+[uwsgi]
+module = wsgi
+</pre>
+	<p>
+		Easy enough. Next, we're going to start it up in master mode and have five worker processes to serve the actual requests. We're going to be using Nginx to handle actual client connections, which will then pass requests to uWSGI. These two are going to
+		be connected via a Unix socket. We'll call the socket myproject.sock and place it in this directory. Realize that we haven't created this file yet and we won't have to. It will be created for us automatically when we run our server.&nbsp;
+	</p>
+	<p>
+		We're going to change the permissions the socket and the vacuum option cleans up the socket when the process stops. We're also going to give uwsgi access to some python plugins. Also die-on-term is going to be set true. We should now have:
+	</p>
+	<p>
+		<strong>~/myproject/myproject.ini</strong>
+	</p>
+	<pre class='new_project'>
+[uwsgi]
+module = wsgi
+master = true
+processes = 5
+socket = myproject.sock
+chmod-socket = 660
+vacuum = true
+plugin = python
+die-on-term = true
+logto = errlog
+</pre>
+	<div>
+		Remember you should give your socket the same name as your project, in my case I called it myproject.sock because the name of my project was called myproject. When you're finished save and close this file.&nbsp;
+	</div>
+	<div>
+		<h2>Uwsgi Upstart Script</h2>
+	</div>
+	<p>
+		What we're going to be creating next is something called an Upstart script. This will allow Ubuntu's init system to automatically start uWSGI and serve our Pylot application whenever the server boots up.&nbsp;
+	</p>
+	<pre class='new_project'>
+$ sudo nano /etc/init/myproject.conf
+</pre>
+	<p>
+		&nbsp;Now inside of this file we're going to give it a simple description, tell our system when to stop and start our script. We're going to define which user and group that uWSGI should be running as. In product ready applications we would have created
+		a user with root access to our ubuntu server, but for simplicity's sake we're just going to set the user to root and set the group to www-data.
+	</p>
+	<p>
+		Your myproject.conf file should look very similar to what we have below, except with your project information instead. Make sure that for the env PATH you point it to the location of your venv folder, because upstart will be using your virtual environment
+		that you created with the . setup file to run your server:
+	</p>
+	<p>
+		<strong>/etc/init/myproject.conf</strong>
+	</p>
+	<pre data-language="python" class='new_project'>
+description "uWSGI server instance configured to serve myproject"
+start on runlevel [2345]
+stop on runlevel [!2345]
+setuid root
+setgid www-data
+env PATH=/home/ubuntu/myproject/venv/bin
+chdir /home/ubuntu/myproject
+exec uwsgi --ini myproject.ini
+</pre>
+	<p>
+		Close this file, make sure to save before you do so. After you exit out we're going to attempt to run your start your server using upstart.&nbsp;
+	</p>
+	<pre class='new_project'>
+sudo start myproject
+</pre>
+	<p>
+		If you receive an error after you enter this command, the first thing you should check for is the syntax. If you input this command below it will tell you if you have any syntax errors within whichever conf file you point it too.&nbsp;
+	</p>
+	<pre class='new_project'>
+init-checkconf -d /etc/init/service_name.conf
+</pre>
+	<p>
+		If you didn't receive any errors the output should be something like&nbsp;
+	</p>
+	<pre class='new_project'>
+myproject start/running process 26824
+</pre>
+	<p>
+		Now before just charging ahead make sure that you understand that all we did here is add .conf file to our ubunutu init folder so that this file runs every time your server starts. We gave it root access to your project folder and to your environment
+		with all of your pthon modules and pointed it at the myproject.ini file that we created in up above.&nbsp;
+	</p>
+	<h1>Nginx</h1>
+	<p>
+		Now that uWSGI is set up, we need to configure Nginx to pass traffic to the uWSGI process. We'll start this by creating a new server block in Nginx's sites-available directory. We'll create the file and open it to edit with this command:
+	</p>
+	<pre class='new_project'>
+sudo nano /etc/nginx/sites-available/myproject
+</pre>
+	<p>
+		This file is going to be really simple, we're going to tell Nginx to listen to our default port of 80. We will also tell it to use this block for requests for our server's domain name. Everyone's going to have a different server_name, open up your amazon
+		console and look up your ip number and replace server_domain_or_IP with your server ip number.&nbsp;
+	</p>
+	<p>
+		Now edit your file to look like this:
+	</p>
+	<pre data-language="python" class='new_project'>
+server {
+    listen 80;
+    server_name YOUR_AWS_IP;
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/myproject/myproject.sock;
+    }
+}
+</pre>
+	<p>
+		Save and close the file when you are finished. Now, we can enable the file by linking it to the <em><strong>sites-enabled</strong></em> directory with this command:
+	</p>
+	<pre class='new_project'>
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+</pre>
+	<p>
+		We can now test our Nginx configuration for any syntax errors with this by typing and running:
+	</p>
+	<pre class='new_project'>
+sudo nginx -t
+</pre>
+	<p>
+		If you got an error,&nbsp;go back and double check&nbsp;<strong>/sites-available/myproject&nbsp;</strong>for any typos/syntax errors.&nbsp;If you see an output like this, our Nginx server was set up successfully:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_2959/handouts/chapter2959_3715_nginx-test.png">
+	</p>
+	<p>
+		If there are no errors, we will now delete the nginx default file, and then restart nginx:
+	</p>
+	<pre>
+sudo rm /etc/nginx/sites-enabled/default
+</pre>
+	<pre class='new_project'>
+sudo service nginx restart
+</pre>
+	<div name="conclusion" data-unique="conclusion" style="color: rgb(0, 0, 0); font-family: proxima-nova, sans-serif; font-size: 19px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 28.5px; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);">
+	</div>
+	<h4>You should now be able to go to your server's domain or IP address to view your application!!!!</h4>
+	<p>
+		<img src="http://s2.quickmeme.com/img/f8/f8ce0ff33ec32c9e6d207078e52bea14a1795afc4ee7d4c065c8bc34bf7fcc51.jpg" style="width: 298px;">
+	</p>
+	<!-- BARAK ADDITION ------------------------------------------------------>
+
+	<h1>Additional commands and settings</h1>
+
+	<h2>Create .sock file (if not auto created)</h2> Create in main project folder (must match name in .ini file and path in nginx server-block file)
+	<pre class='new_project'>
+touch myproject.sock
+</pre>
+
+	<p>
+		Might need to start the service if receiving error 'permission denied'
+	</p>
+	<pre class='new_project'>
+sudo start myproject
+</pre>
+	<h2>View Error log</h2>
+	<pre class='new_project'>
+sudo tail -f errlog
+more /var/log/nginx/error.log
+</pre>
+	<h2>Verify DB name and status in project's config folder</h2>
+	<pre class='new_project'>
+more myproject/app/config/database.py (view only)
+sudo nano myproject/app/config/database.py (edit)
+</pre>
+	<p>
+		Set DB_ON =True and change DB name in Development class (if needed)
+	</p>
+	<pre class='new_project'>
+DB_ON = True
+DB_DATABASE_NAME = 'db_name'
+</pre>
+
+	<h1>Steps for pushing and pulling changes</h1>
+	<pre class='new_project'>
+1. From local: git push -u origin &lt;branch_name (ex: master, stable, development, etc.)&gt;
+2. From remote ssh: git pull origin &lt;branch_name (ex: master, stable, development, etc.)&gt;
+3. If changes made to .sql file, rerun mysql scripts to load database changes
+4. Restart project: sudo restart myproject
+5. Restart nginx: sudo service nginx restart
+</pre>
+
+	<h1>Steps for new project upload</h1>
+	<pre class='new_project'>
+1. Clone from GitHub
+2. run setup.py (twice?)
+3. Run sql script to cretae db and tables
+4. Test - run server from wsgi
+5. Create new .ini file
+6. Create new .conf file
+7. Run command to check conf file
+8. Create new Nginx server block file in sites-avilable
+9. Link sites-enabled to sites-avilable (new file)
+10. Remove link to old Nginx server block file (sudo rm...)
+11. Restart Nginx service
+12. Enjoy!
+</pre>
+
+	<!-- CUSTOM DOMAIN ------------------------------------>
+	<h1>Custom Domains</h1>
+	<p>
+		If you've gotten this far, you should see your project deployed in the cloud! However, we probably don't want users to have to write in the IP address to visit your site so we'll go ahead and set up a custom domain. For the rest of this chapter, you'll
+		need to purchase a domain via a provider such as GoDaddy.
+	</p>
+	<h2>Configure DNS settings</h2>
+	<p>
+		Whichever domain service you decided to use, you'll want to find the settings for the particular domain that you want to use to reference your EC2 instance. On GoDaddy, if you look at your domains page, you can click "Manage DNS" to get to the right place:
+	</p>
+	<p>
+		Once there, you'll want to change the A(Host) Record in your Go Daddy DNS and point it to the public IP address of your EC2 instance. You can do this by clicking the edit icon (next to the trash can) and then entering your public IP address:
+	</p>
+	<p>
+		<img src="http://s3.amazonaws.com/General_V88/boomyeah/company_209/chapter_3227/handouts/chapter3227_5353_a-host.png">
+	</p>
+	<h2>Editing Nginx Settings</h2>
+	<p>
+		Now we'll edit our Nginx configurations to finish up. Back in your EC2 terminal open up the Nginx config file in vim and replace 'server_ name' &nbsp;value with the name of your domain. Don't worry about the syntax highlighting just worry about the content
+		:)
+	</p>
+	<pre data-language="html">
+server {
+    listen 80;
+    server_name YOUR_DOMAIN_NAME_HERE
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/myproject/myproject.sock
+    }
+}
+</pre>
+	<p>
+		Once you've finished making changes type :wq to quit vim then restart your Nginx server:
+	</p>
+	<pre>
+sudo service nginx restart
+</pre>
+	<h2>Fin.</h2>
+	<p>
+		You can now see our product app served up at your custom domain name!
+	</p>
+	<h1>Wrapping Up</h1>
+	<p>
+		Congrats you've deployed your first Pylot app! :)
+	</p>
+
+</body>
+
+</html>
