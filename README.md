@@ -116,15 +116,30 @@ pm2 start server.js
 sudo service nginx reload && sudo service nginx restart
 ```
 #### Pylot: 
-  * follow instructions in highlighted blue lines via [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html) (except for Nginx section)
+follow instructions in highlighted blue lines via [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html) (except for Nginx section)
 ```bash 
 sudo service nginx reload && sudo service nginx restart
 ```
 
 ---
 
-## 5.
+## 6. Verify all the apps are running
+#### Node:
+```bash 
+pm2 status
+```
+#### Pylot:
+```bash 
+sudo start PROJECT
+```
 
+---
 
-6.
-7.
+## 6. Go to your domain name registrar and find *Advanced DNS* 
+
+#### Set up an "A Record" with "Host == @" and "Value == [IP ADDRESS OF AWS INSTANCE]"
+### Set up "CNAME Record" with "Host == SUBDOMAIN" and "Value == [DOMAIN NAME]"
+
+---
+
+## 7. Congratulations! We're done! Test out your domain and subdomains.
