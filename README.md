@@ -123,7 +123,7 @@ sudo service nginx reload && sudo service nginx restart
 
 ---
 
-## 6. Verify all the apps are running
+## 5. Verify all the apps are running.
 #### Node:
 ```bash 
 pm2 status
@@ -135,10 +135,13 @@ sudo start PROJECT
 
 ---
 
-## 6. Go to your domain name registrar and find *Advanced DNS* 
+## 6. Go to your domain name registrar and find *Advanced DNS.*
 
-#### Set up an "A Record" with "Host == @" and "Value == [IP ADDRESS OF AWS INSTANCE]"
-### Set up "CNAME Record" with "Host == SUBDOMAIN" and "Value == [DOMAIN NAME]"
+#### Set up an "A Record" with "Host" set to @ and "Value" set to {{IP ADDRESS OF AWS INSTANCE}}
+#### Set up "CNAME Record" with "Host" set to {{SUBDOMAIN}} and Value set to {{DOMAIN NAME}}
+
+[Subdomain Configuration](https://github.com/alex-wap/subdomains/blob/master/Subdomains.png "Subdomain Configuration")
+
 
 ---
 
