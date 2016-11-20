@@ -14,6 +14,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
   * [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
 
 2. All of your applications must be on a different port.
+---
 ### Node: Typically, the port is specified in the server.js file or a settings.js file using: 
 ```javascript
 var server = app.listen(8001);
@@ -30,7 +31,7 @@ manager.add_command('runserver', Server(host='127.0.0.1',port='5001'))
 application.run(host='127.0.0.1',port=5001)
 # NOTE: port must be an integer.
 ```  
-
+---
 
 3.
 4.
