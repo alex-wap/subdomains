@@ -1,17 +1,20 @@
-# Multiple Applications and Subdomains Tutorial
+# Multiple Subdomains Tutorial
 
 
 This tutorial teaches developers how to deploy multiple apps to the same AWS EC2 instance and how to configure subdomains. (Node and [Pylot](https://github.com/Ketul-Patel/Pylot/tree/development) apps)
 
+---
 
 # Instructions
 
 
-## 1. First, you will need to configure at least one application for deployment. Follow the instructions below for the corresponding type of app.
+## 1. First, configure at least one application for deployment. Follow the instructions below for the corresponding type of app.
 
-  * [Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
+###[Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
 
-  * [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
+###[Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
+
+
 ---
 
 ## 2. All applications must be on a different port.
@@ -42,7 +45,7 @@ application.run(host='127.0.0.1',port=5001)
   * DOMAIN.com must be replaced by the domain name
   * PROJECT#.DOMAIN.com must be replaced by the desired subdomain name
   * PORT* must be replaced by the project's port
-  * PROJECT#.sock must match the config of project.ini file
+  * PROJECT#.sock must match the configuration of the project.ini file
 ```
 server {
   server_name DOMAIN.com;
@@ -101,20 +104,22 @@ server {
 ```
 ---
 
-## 4. Deploy the rest of your apps on the existing AWS EC2 instance.
+## 4. Deploy other apps to the existing AWS EC2 instance.
 
-#### Node: 
-  * cd /var/www
-  * sudo git clone {{your project file path on github}}
-  * cd /var/www/{{project_name}}
-  * sudo npm install
-  * pm2 start server.js
-  * sudo service nginx reload && sudo service nginx restart
-
+#### Node:
+```bash 
+cd /var/www
+sudo git clone {{project file path on github}}
+cd /var/www/{{project_name}}
+sudo npm install
+pm2 start server.js
+sudo service nginx reload && sudo service nginx restart
+```
 #### Pylot: 
-  * follow instructions in highlighted blue lines via [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
-  * sudo restart PROJECT
-  * sudo service nginx reload && sudo service nginx restart
+  * follow instructions in highlighted blue lines via [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html) (except for Nginx section)
+```bash 
+sudo service nginx reload && sudo service nginx restart
+```
 
 ---
 
