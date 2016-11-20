@@ -140,7 +140,7 @@ sudo start PROJECT
 #### Set up an "A Record" with "Host" set to @ and "Value" set to {{IP ADDRESS OF AWS INSTANCE}}
 #### Set up "CNAME Record" with "Host" set to {{SUBDOMAIN}} and Value set to {{DOMAIN NAME}}
 
-[Subdomain Configuration](https://github.com/alex-wap/subdomains/blob/master/Subdomains.png "Subdomain Configuration")
+![Subdomain Configuration](https://raw.githubusercontent.com/alex-wap/subdomains/master/Subdomains.png "Subdomain Configuration")
 
 
 ---
