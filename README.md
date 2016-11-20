@@ -12,6 +12,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
   * [Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
 
   * [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
+---
 
 ## 2. All applications must be on a different port.
 
@@ -37,9 +38,9 @@ application.run(host='127.0.0.1',port=5001)
 ## 3. Configure the Nginx file for all apps.
 
 
-#### The first three server configs are for Node and the last two server configs are for Pylot.
+#### Overwite the existing Nginx file with this format. The first three server configs are for Node and the last two server configs are for Pylot.
   * DOMAIN.com must be replaced by the domain name
-  * PROJECT# must be replaced by the desired subdomain name
+  * PROJECT#.DOMAIN.com must be replaced by the desired subdomain name
   * PORT* must be replaced by the project's port
   * PROJECT#.sock must match the config of project.ini file
 ```
@@ -105,8 +106,20 @@ server {
 #### Node: 
   * cd /var/www
   * sudo git clone {{your project file path on github}}
+  * cd /var/www/{{project_name}}
+  * sudo npm install
+  * pm2 start server.js
+  * sudo service nginx reload && sudo service nginx restart
 
-4.
-5.
+#### Pylot: 
+  * follow instructions in highlighted blue lines via [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
+  * sudo restart PROJECT
+  * sudo service nginx reload && sudo service nginx restart
+
+---
+
+## 5.
+
+
 6.
 7.
