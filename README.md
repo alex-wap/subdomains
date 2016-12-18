@@ -17,6 +17,8 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 ###[Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
 
 ###[Django Deployment (WIP)](https://github.com/AnnaBNana/DjangoDeployment)
+####[nginx and gunicorn config](https://scottlinux.com/2014/04/03/how-to-host-multiple-django-or-python-apps-on-the-same-host-with-nginx-and-gunicorn/)
+####[wsgi file config](https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-apps-using-gunicorn-http-server-behind-nginx)
 
 ---
 
