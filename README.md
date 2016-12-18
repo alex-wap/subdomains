@@ -14,6 +14,8 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 
 ###[Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
 
+###[Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
+
 
 ---
 
