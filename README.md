@@ -116,12 +116,17 @@ server {
 # django example
 server {
   server_name PROJECT4.DOMAIN.com;
+  location /static/ {
+    root /home/ubuntu/PROJECT4;
+  }
   location / {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $proxy_host;
     proxy_set_header X-NginX-Proxy true;
     proxy_pass       http://127.0.0.1:PORT5;
+    include proxy_params;
+    proxy_pass http://unix:/home/ubuntu/PROJECT4/PROJECT4.sock;
     }
 }
 
