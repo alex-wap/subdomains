@@ -16,6 +16,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 
 ###[Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
 
+###[Django Deployment (WIP)](https://github.com/AnnaBNana/DjangoDeployment)
 
 ---
 
@@ -38,6 +39,20 @@ manager.add_command('runserver', Server(host='127.0.0.1',port='5001'))
 application.run(host='127.0.0.1',port=5001)
 # NOTE: port must be an integer.
 ```  
+
+#### Rails: WIP.
+##### some_file.rb:
+```
+where do you specify the port for ruby projects?
+```  
+
+#### Django: WIP.
+##### some_file.py:
+```
+cd ~/product_catalog
+gunicorn --bind 0.0.0.0:PORT product_catalog.wsgi:application
+?
+```  
 ---
 
 ## 3. Configure the Nginx file for all apps.
@@ -49,6 +64,7 @@ application.run(host='127.0.0.1',port=5001)
   * PORT* must be replaced by the project's port
   * PROJECT#.sock must match the configuration of the project.ini file
 ```
+# node example
 server {
   server_name DOMAIN.com;
   location / {
@@ -59,6 +75,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT1;
     }
 }
+# node example 2
 server {
   server_name PROJECT1.DOMAIN.com;
   location / {
@@ -69,6 +86,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT2;
     }
 }
+# pylot example
 server {
   server_name PROJECT2.DOMAIN.com;
   location / {
@@ -77,32 +95,36 @@ server {
     proxy_set_header Host $proxy_host;
     proxy_set_header X-NginX-Proxy true;
     proxy_pass       http://127.0.0.1:PORT3;
+    include uwsgi_params;
+    uwsgi_pass unix:/home/ubuntu/PROJECT2/PROJECT2.sock;
     }
 }
+# rails example
 server {
   server_name PROJECT3.DOMAIN.com;
+  passenger_enabled on; 
+  passenger_app_env development; 
+  root /var/www/<your_app_name>/public;
   location / {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $proxy_host;
     proxy_set_header X-NginX-Proxy true;
     proxy_pass       http://127.0.0.1:PORT4;
-    include uwsgi_params;
-    uwsgi_pass unix:/home/ubuntu/PROJECT3/PROJECT3.sock;
     }
 }
+# django example
 server {
-   server_name PROJECT4.DOMAIN.com;
-   location / {
+  server_name PROJECT4.DOMAIN.com;
+  location / {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $proxy_host;
     proxy_set_header X-NginX-Proxy true;
-    proxy_pass         http://127.0.0.1:PORT5;
-    include uwsgi_params;
-    uwsgi_pass unix:/home/ubuntu/PROJECT4/PROJECT4.sock;
+    proxy_pass       http://127.0.0.1:PORT5;
     }
 }
+
 ```
 ---
 
@@ -122,7 +144,16 @@ follow instructions in highlighted blue lines via [Pylot Deployment](https://htm
 ```bash 
 sudo service nginx reload && sudo service nginx restart
 ```
-
+#### Rails: 
+follow instructions via [Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html) (except for Nginx section)
+```bash 
+sudo service nginx reload && sudo service nginx restart
+```
+#### Django: 
+follow instructions via [Django Deployment (WIP)](https://github.com/AnnaBNana/DjangoDeployment) (except for Nginx section)
+```bash 
+sudo service nginx reload && sudo service nginx restart
+```
 ---
 
 ## 5. Verify all the apps are running.
@@ -133,6 +164,14 @@ pm2 status
 #### Pylot:
 ```bash 
 sudo start PROJECT
+```
+#### Rails:
+```bash 
+sudo service nginx restart
+```
+#### Django:
+```bash 
+sudo service gunicorn start
 ```
 
 ---
