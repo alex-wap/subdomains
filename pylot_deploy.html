@@ -314,13 +314,15 @@ sudo pip install virtualenv
 </pre>
 	<h3>A virtualenv of your own</h3>
 
-<b>Make sure you're not using the virtual environment from your local machine.</b> If there is a pylotVenv folder inside of your directory that came from your local machine, make sure to remove it first before continuing.
+<b>Make sure you're not using the virtual environment from your local machine.</b> If there is a venv folder inside of your directory that came from your local machine, make sure to remove it first before continuing.
 
 	<p>
 		Once successfully installed, we can set up the virtualenv for our project. Navigate into the directory of your project, and now that we're in the project directory, create a Python virtual environment by typing:
 	</p>
 	<pre class='new_project'>
-python setup.py
+virtualenv venv<br>
+source venv/bin/activate<br>
+pip install -r system/setup/dependenciesUbuntu.txt
 </pre>
 <p>If the above gives an error, try the following instead:</p>
 	<pre class='new_project'>
@@ -337,7 +339,7 @@ python setup.py (notice if the instructions require to re-run this in the virtua
 		Before moving on, lets make sure that our virtual environment was set up correctly, you should see something similar in your own console:
 	</p>
 	<pre class='new_project'>
-(myproject_env)ubuntu@ip-172-31-33-212:
+(venv)ubuntu@ip-172-31-33-212:
 </pre>
 	<p>
 		With that done, we should have your project uploaded to your AWS instance and successfully created a virtual environment with all of your projects dependencies installed.&nbsp;
