@@ -158,9 +158,17 @@ sudo service nginx restart
 ```
 #### Django: 
 follow instructions via [Django Deployment](https://github.com/alex-wap/DjangoDeployment) (except for Nginx section)
+Ubuntu 14.04:
 ```bash 
 sudo service gunicorn restart
 sudo service nginx reload && sudo service nginx restart
+```
+Ubuntu 16.04:
+```bash 
+sudo systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+sudo service nginx restart
 ```
 ---
 
@@ -177,12 +185,18 @@ sudo start PROJECT
 ```bash 
 sudo service nginx restart
 ```
-#### Django:
+#### Django (Ubuntu 14.04):
 ```bash 
 sudo service gunicorn restart
 sudo service nginx restart
 ```
-
+#### Django (Ubuntu 16.04):
+```bash 
+sudo systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+sudo service nginx restart
+```
 ---
 
 ## 6. Go to your domain name registrar and find *Advanced DNS.*
