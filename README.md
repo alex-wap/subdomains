@@ -14,7 +14,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 
 ###[Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
 
-###[Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
+###[Rails Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
 
 ###[Django Deployment](https://github.com/alex-wap/DjangoDeployment)
 
@@ -40,11 +40,7 @@ application.run(host='127.0.0.1',port=5001)
 # NOTE: port must be an integer.
 ```  
 
-#### Rails: WIP.
-##### some_file.rb:
-```
-where do you specify the port for ruby projects?
-```  
+#### Rails: You don't need to specify ports because of [Phusion Passenger](https://www.phusionpassenger.com/library/walkthroughs/basics/ruby/fundamental_concepts.html). 
 
 #### Django: Replace your `manage.py` file (do not forget to replace PROJECTNAME and PORT with your project name and port number)
 ##### manage.py:
@@ -79,7 +75,7 @@ if __name__ == "__main__":
   * PORT* must be replaced by the project's port
   * PROJECT#.sock must match the configuration of the project.ini file
 ```
-# Node example
+# Node example (replace PORT1)
 server {
   server_name DOMAIN.com;
   location / {
@@ -90,7 +86,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT1;
     }
 }
-# Node example 2
+# Node example 2 (replace PROJECT1 and PORT2)
 server {
   server_name PROJECT1.DOMAIN.com;
   location / {
@@ -101,7 +97,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT2;
     }
 }
-# Pylot example
+# Pylot example (replace PROJECT2 and PORT3)
 server {
   server_name PROJECT2.DOMAIN.com;
   location / {
@@ -114,21 +110,15 @@ server {
     uwsgi_pass unix:/home/ubuntu/PROJECT2/PROJECT2.sock;
     }
 }
-# Rails example
+# Rails example (replace PROJECT3 and FOLDER)
 server {
-  server_name PROJECT3.DOMAIN.com;
-  passenger_enabled on; 
-  passenger_app_env development; 
-  root /var/www/<your_app_name>/public;
-  location / {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $proxy_host;
-    proxy_set_header X-NginX-Proxy true;
-    proxy_pass       http://127.0.0.1:PORT4;
-    }
+    listen 80;
+    server_name PROJECT3.DOMAIN.com;
+    passenger_enabled on;
+    passenger_app_env development;
+    root /var/www/FOLDER/public;
 }
-# Django example
+# Django example (replace REPONAME and PROJECT4)
 server {
       listen 80;
       server_name PROJECT4.DOMAIN.com;
@@ -162,9 +152,9 @@ follow instructions in highlighted blue lines via [Pylot Deployment](https://htm
 sudo service nginx reload && sudo service nginx restart
 ```
 #### Rails: 
-follow instructions via [Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html) (except for Nginx section)
+follow instructions via [Rails Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html) (except for Nginx section)
 ```bash 
-sudo service nginx reload && sudo service nginx restart
+sudo service nginx restart
 ```
 #### Django: 
 follow instructions via [Django Deployment](https://github.com/alex-wap/DjangoDeployment) (except for Nginx section)
