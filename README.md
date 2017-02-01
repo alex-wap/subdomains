@@ -16,9 +16,7 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 
 ###[Rails Deployment (WIP)](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
 
-###[Django Deployment (WIP)](https://github.com/AnnaBNana/DjangoDeployment)
-####[nginx and gunicorn config](https://scottlinux.com/2014/04/03/how-to-host-multiple-django-or-python-apps-on-the-same-host-with-nginx-and-gunicorn/)
-####[wsgi file config](https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-apps-using-gunicorn-http-server-behind-nginx)
+###[Django Deployment](https://github.com/alex-wap/DjangoDeployment)
 
 ---
 
@@ -48,13 +46,28 @@ application.run(host='127.0.0.1',port=5001)
 where do you specify the port for ruby projects?
 ```  
 
-#### Django: WIP.
-##### some_file.py:
+#### Django: Replace your `manage.py` file (do not forget to replace PROJECTNAME and PORT with your project name and port number)
+##### manage.py:
+```python
+#!/usr/bin/env python
+import os
+import sys
+
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PROJECTNAME.settings")
+    
+    # Different port manage.py file 
+    import django
+    django.setup()
+
+    # Override default port for `runserver` command
+    from django.core.management.commands.runserver import Command as runserver
+    runserver.default_port = "PORT"
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(sys.argv)
 ```
-cd ~/product_catalog
-gunicorn --bind 0.0.0.0:PORT product_catalog.wsgi:application
-?
-```  
 ---
 
 ## 3. Configure the Nginx file for all apps.
@@ -66,7 +79,7 @@ gunicorn --bind 0.0.0.0:PORT product_catalog.wsgi:application
   * PORT* must be replaced by the project's port
   * PROJECT#.sock must match the configuration of the project.ini file
 ```
-# node example
+# Node example
 server {
   server_name DOMAIN.com;
   location / {
@@ -77,7 +90,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT1;
     }
 }
-# node example 2
+# Node example 2
 server {
   server_name PROJECT1.DOMAIN.com;
   location / {
@@ -88,7 +101,7 @@ server {
     proxy_pass       http://127.0.0.1:PORT2;
     }
 }
-# pylot example
+# Pylot example
 server {
   server_name PROJECT2.DOMAIN.com;
   location / {
@@ -101,7 +114,7 @@ server {
     uwsgi_pass unix:/home/ubuntu/PROJECT2/PROJECT2.sock;
     }
 }
-# rails example
+# Rails example
 server {
   server_name PROJECT3.DOMAIN.com;
   passenger_enabled on; 
@@ -115,21 +128,18 @@ server {
     proxy_pass       http://127.0.0.1:PORT4;
     }
 }
-# django example
+# Django example
 server {
-  server_name PROJECT4.DOMAIN.com;
-  location /static/ {
-    root /home/ubuntu/PROJECT4;
-  }
-  location / {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $proxy_host;
-    proxy_set_header X-NginX-Proxy true;
-    proxy_pass       http://127.0.0.1:PORT5;
-    include proxy_params;
-    proxy_pass http://unix:/home/ubuntu/PROJECT4/PROJECT4.sock;
-    }
+      listen 80;
+      server_name PROJECT4.DOMAIN.com;
+      location = /favicon.ico { access_log off; log_not_found off; }
+      location /static/ {
+            root /home/ubuntu/REPONAME;
+      }
+      location / {
+            include proxy_params;
+            proxy_pass http://unix:/home/ubuntu/REPONAME/PROJECT4.sock;
+      }
 }
 
 ```
@@ -157,8 +167,9 @@ follow instructions via [Rails Deployment (WIP)](https://htmlpreview.github.io/?
 sudo service nginx reload && sudo service nginx restart
 ```
 #### Django: 
-follow instructions via [Django Deployment (WIP)](https://github.com/AnnaBNana/DjangoDeployment) (except for Nginx section)
+follow instructions via [Django Deployment](https://github.com/alex-wap/DjangoDeployment) (except for Nginx section)
 ```bash 
+sudo service gunicorn restart
 sudo service nginx reload && sudo service nginx restart
 ```
 ---
@@ -178,7 +189,8 @@ sudo service nginx restart
 ```
 #### Django:
 ```bash 
-sudo service gunicorn start
+sudo service gunicorn restart
+sudo service nginx restart
 ```
 
 ---
