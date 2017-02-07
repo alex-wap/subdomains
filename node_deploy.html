@@ -1,119 +1,259 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://learn.codingdojo.com/m/4/3710/24924 -->
+<html class=""><script async="" src="./Node_Deployment_files/b76VnM_4RlZ_3DFVBtLA"></script><script data-x-lastpass="">(function(){var c=0;if("undefined"!==typeof CustomEvent&&"function"===typeof window.dispatchEvent){var a=function(a){try{if("object"===typeof a&&(a=JSON.stringify(a)),"string"===typeof a)return window.dispatchEvent(new CustomEvent("lprequeststart",{detail:{data:a,requestID:++c}})),c}catch(f){}},b=function(a){try{window.dispatchEvent(new CustomEvent("lprequestend",{detail:a}))}catch(f){}};"undefined"!==typeof XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.send&&(XMLHttpRequest.prototype.send=
+function(c){return function(f){var d=this,e=a(f);e&&d.addEventListener("loadend",function(){b({requestID:e,statusCode:d.status})});return c.apply(d,arguments)}}(XMLHttpRequest.prototype.send));"function"===typeof fetch&&(fetch=function(c){return function(f,d){var e=a(d),g=c.apply(this,arguments);if(e){var h=function(a){b({requestID:e,statusCode:a&&a.status})};g.then(h)["catch"](h)}return g}}(fetch))}})();
+(function(){if("undefined"!==typeof CustomEvent){var c=function(a){if(a.lpsubmit)return a;var b=function(){try{this.dispatchEvent(new CustomEvent("lpsubmit"))}catch(k){}return a.apply(this,arguments)};b.lpsubmit=!0;return b};window.addEventListener("DOMContentLoaded",function(){if(document&&document.forms&&0<document.forms.length)for(var a=0;a<document.forms.length;++a)document.forms[a].submit=c(document.forms[a].submit)},!0);document.createElement=function(a){return function(){var b=a.apply(this,
+arguments);b&&"FORM"===b.nodeName&&b.submit&&(b.submit=c(b.submit));return b}}(document.createElement)}})();
+</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> | AWS Deployment</title>
+    <link href="http://learn.codingdojo.com/assets/black_ninja-db2fe4f1051012ab89c235cc9bf3cd5a.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="./Node_Deployment_files/chapter_modules_layout-867a511783496772c93b18a75d8c64a7.css" media="all" rel="stylesheet">
+    <link href="./Node_Deployment_files/modules_layout-ef87594cab6118a723a5e6b7b9608237.css" media="all" rel="stylesheet">
+
+
+    <script src="./Node_Deployment_files/chapter_modules_scripts-b3e4ebab92dbdbc3d4a7dcd09fdb2251.js"></script><style type="text/css">
+:root #content > #right > .dose > .dosesingle,
+:root #content > #center > .dose > .dosesingle
+{ display: none !important; }</style><style></style><script src="./Node_Deployment_files/clipboard.min.js"></script>
+    <script src="./Node_Deployment_files/modules_scripts-4dabdc4725f0e0f3e80412f4cdbc0693.js"></script>
+
+<section id="main_content">
+    	<div id="content_navigation">
+
+		<div id="return_button" class="right_align">
+
+			<input type="hidden" name="authenticity_token" value="ifTj9SQrJ2ch8RdaG9qjly19M7izkX2i8+N0U4UvPjE=" current-module="24924"> 
+		</div>
+	</div>
+	<div id="section_content">
+		<div class="content_block">
+			<div id="module_container">
+				<div class="module_content module_content_block">
+
 								<div class="module_description active_lesson active_lesson_with_video ">
-										<h1>Node AWS Deployment</h1><h2>Part 1: Get prepared</h2><h3>Core Setup Requirements</h3><ol>
- <li>An AWS account 2) A GitHub or bitbucket account 3) An internet connection 4) Git should be installed locally</li></ol><h3>Get going</h3><ol>
- <li>Create a local, functional project 2) Keep that version, version controlled via git - good practice anyways.</li></ol><h3>Make a GitHub/bitbucket repository</h3><ol>
- <li>Push your project to that GitHub/bitbucket repository</li></ol><hr>
-<h2>Part 2: Set up AWS</h2><ol>
- <li>Enter AWS, and click launch new instance. 2) Select ubuntu14.04 3) Select t2.micro 4) Set security settings:</li></ol><p>
- <code>ssh 0.0.0.0, (Anywhere or myIP)</code></p><p>
- <code>http 0.0.0.0 (Anywhere)</code></p><p>
- <code>https 0.0.0.0 (Anywhere, or don't set it)</code> 5) Download a <code>.pem</code> key from AWS 6) Move the <code>.pem</code> file to an appropriate folder on your system 7) Change user permission on <code>.pem</code> <code>chmod 400 {{mypem}}.pem</code></p><h3>For PC, that command might require kitty or putty or bash terminal</h3><p>
- We are now ready to enter the cloud server!</p><h2>Part 3: Enter cloud server</h2><p>
- <strong>Navigate to the folder where your .pem file is!</strong></p><p>
- (you can use the ‘connect’ button on Amazon AWS to get the next line of code)</p><h3>For PC, the command below might require kitty or putty or bash terminal</h3><ol>
- <li><code>ssh -i {{mypem}}.pem ubuntu@{{yourAWS.ip}}</code> again you can get this exact line of code from <button> Connect </button> on AWS. (The command is found below <strong>example</strong>). 2) In the ubuntu terminal: These establish some basic dependencies for deployment and the Linux server.</li></ol>
-<pre data-language="bash">sudo apt-get update
-sudo apt-get install -y build-essential openssl libssl-dev pkg-config
-</pre><ol start="3">
- <li>In the ubuntu terminal, one at a time because they require confirmation: (these install basic node and npm)</li></ol>
-<pre data-language="bash">sudo apt-get install node
-sudo apt-get install npm
-sudo npm cache clean -f
-(The cache clean -f, forcibly cleans the cache.  This will give an interesting comment:))
-</pre><ol start="4">
- <li>In the ubuntu terminal: These install the node package manager <strong>n</strong> and updated node.</li></ol>
-<pre data-language="bash">sudo npm install -g n
-sudo n stable (or whichever node version you want e.g. 5.9.0)
-</pre><ol start="5">
- <li><code>node -v</code> should give you the stable version of node, or the version that you just installed.&nbsp;</li> <li>Install NGINX and git:</li></ol>
-<pre data-language="bash">sudo apt-get install nginx
-sudo apt-get install git
-</pre><ol start="7">
- <li>Make your file folder:</li></ol>
-<pre data-language="bash">sudo mkdir /var/www
-</pre><ol start="8">
- <li>Enter the folder:</li></ol>
-<pre data-language="bash">cd /var/www
-</pre><ol start="9">
- <li>Clone your project:</li></ol>
-<pre data-language="bash">sudo git clone {{your project file path on github/bitbucket}}
-</pre><h4>At this point, you should be able to change directories into your project and run your server. It will most likely fail, because of not having mongod up and running, but running the project should be as simple as <code>node server.js</code> or a similar command like <code>npm start</code>.</h4><h2>Part 4: Set up NGINX</h2><ol>
- <li>Go to nginx’s sites-available directory :</li></ol>
-<pre data-language="bash">cd /etc/nginx/sites-available
-</pre><ol start="2">
- <li>Enter vim:</li></ol>
-<pre data-language="bash">sudo vim {{project_name}}
-</pre><h3>vim is a terminal-based text editor for more info see: <a href="http://vim-adventures.com/" target="_blank">vim-adventures.com/</a> or other vim learning tools. The key commands for us are <strong>i</strong> which allows us to type, <strong>esc</strong> which turns off insert and then after <strong>esc</strong> <strong>:wq</strong> which says write and quit.</h3><ol start="3">
- <li>Paste and modify the following code into vim after hitting i:</li></ol>
-<pre data-language="bash">server {
-    listen 80;
-    location / {
-        proxy_pass http://{{PRIVATE-IP}}:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-</pre><p>
- This code says: have the reverse proxy server (nginx) listen at port 80. When going to root /, listen for http requests as though you were actually http:// your private ip and the port your server is listening e.g @8000 or @6789 etc.</p><p>
- Learn more from nginx: <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html" target="_blank">http://nginx.org/en/docs/http/ngx_http_proxy_module.html</a></p><ol start="4">
- <li>Remove the defaults from <code>/etc/nginx/sites-available</code></li></ol>
-<pre data-language="bash">sudo rm default
-</pre><ol start="5">
- <li>Create a symbolic link from sites-enabled to sites available:</li></ol>
-<pre data-language="bash">sudo ln -s /etc/nginx/sites-available/{{project_name}} /etc/nginx/sites-enabled/{{project_name}}
-</pre><p>
+									<h1>AWS Deployment</h1>
+<h2>Part 1: Get prepared</h2>
+<h3>Core Setup Requirements</h3>
+<ol>
+ 
+<li>An AWS account&nbsp;</li><li>A GitHub or bitbucket account&nbsp;</li><li>An internet connection&nbsp;</li><li>Git should be installed locally</li></ol>
+<h3>Get going</h3>
+<ol>
+ 
+<li>Create a local, functional project&nbsp;</li><li>Keep that version, version controlled via git - good practice anyway.</li></ol>
+<h3>Make a GitHub/bitbucket repository</h3>
+<ol>
+ 
+<li>Push your project to that GitHub/bitbucket repository</li></ol>
+<hr>
+<h2>Part 2: Set up AWS</h2>
+<ol>
+  <li>Enter AWS, and click launch new instance.</li> 
+  <li>Select Ubuntu 16.04 LTS</li> 
+  <li>Select t2.micro</li>
+  <li>Set security settings:
+    <ul>
+      <li>
+        <code>ssh 0.0.0.0, (Anywhere or myIP)</code>
+      </li>
+      <li>
+        <code>http 0.0.0.0 (Anywhere)</code>
+      </li>
+      <li>
+        <code>https 0.0.0.0 (Anywhere, or don't set it)</code>
+      </li>
+    </ul>
+  </li>
+  <li>Download a <code>.pem</code> key from AWS</li>
+  <li>Move the <code>.pem</code> file to an appropriate folder on your system </li>
+  <li>Change user permission on <code>.pem</code> <code>chmod 400 {{mypem}}.pem</code></li>
+</ol>
+<h3>For PC, that command might require kitty or putty or bash terminal</h3>
+<p>We are now ready to enter the cloud server!</p>
+<h2>Part 3: Enter cloud server</h2>
+<p><strong>Navigate to the folder where your .pem file is!</strong></p>
+<p>(you can use the ‘connect’ button on Amazon AWS to get the next line of code)</p>
+<h3>For PC, the command below might require kitty or putty or bash terminal</h3>
+<ol> 
+  <li>
+    <code>ssh -i {{mypem}}.pem ubuntu@{{yourAWS.ip}}</code> again you can get this exact line of code from     <button> Connect </button> on AWS. (The command is found below <strong>example</strong>). 
+  </li>
+  <li>
+    In the ubuntu terminal: These establish some basic dependencies for deployment and the Linux server.
+  </li>
+</ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y build-essential openssl libssl-dev pkg-config
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="3">
+  <li>
+    In the ubuntu terminal, one at a time because they require confirmation: (these install basic node and npm)  
+  </li>
+</ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y nodejs nodejs-legacy</code>
+</pre>
+<p>
+Note: In case this does not work, try<strong> sudo apt install nodejs-legacy</strong> instead.</p>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">npm</span>
+<span class="token function">sudo</span> <span class="token function">npm</span> cache clean -f
+<span class="token punctuation">(</span>The cache clean -f, forcibly cleans the cache.  This will give an interesting comment:<span class="token punctuation">))</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="4">
+ 
+<li>In the ubuntu terminal: These install the node package manager <strong>n</strong> and updated node.</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> -g n
+<span class="token function">sudo</span> n stable <span class="token punctuation">(</span>or whichever node version you want e.g. 5.9.0<span class="token punctuation">)</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="5">
+ 
+<li><code>node -v</code> should give you the stable version of node, or the version that you just installed.&nbsp;</li> 
+<li>Install NGINX and git:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> nginx
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="7">
+ 
+<li>Make your file folder:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">mkdir</span> /var/www
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="8">
+ 
+<li>Enter the folder:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">cd</span> /var/www
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="9">
+ 
+<li>Clone your project:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">git</span> clone <span class="token punctuation">{</span><span class="token punctuation">{</span>your project <span class="token function">file</span> path on github/bitbucket<span class="token punctuation">}</span><span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<h4>At this point, you should be able to change directories into your project and run your server. It will most likely fail, because of not having mongod up and running, but running the project should be as simple as <code>node server.js</code> or a similar command like <code>npm start</code>.</h4>
+<h2>Part 4: Set up NGINX</h2>
+<ol>
+ 
+<li>Go to nginx’s sites-available directory :</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">cd</span> /etc/nginx/sites-available
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="2">
+ 
+<li>Enter vim:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> vim <span class="token punctuation">{</span><span class="token punctuation">{</span>project_name<span class="token punctuation">}</span><span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<h3>vim is a terminal-based text editor for more info see: <a href="http://vim-adventures.com/" target="_blank">vim-adventures.com/</a> or other vim learning tools. The key commands for us are <strong>i</strong> which allows us to type, <strong>esc</strong> which turns off insert and then after <strong>esc</strong> <strong>:wq</strong> which says write and quit.</h3>
+<ol start="3">
+ 
+<li>Paste and modify the following code into vim after hitting i:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash">server <span class="token punctuation">{</span>
+    listen 80<span class="token punctuation">;</span>
+    location / <span class="token punctuation">{</span>
+        proxy_pass http://<span class="token punctuation">{</span><span class="token punctuation">{</span>PRIVATE-IP<span class="token punctuation">}</span><span class="token punctuation">}</span>:8000<span class="token punctuation">;</span>
+        proxy_http_version 1.1<span class="token punctuation">;</span>
+        proxy_set_header Upgrade <span class="token variable">$http_upgrade</span><span class="token punctuation">;</span>
+        proxy_set_header Connection <span class="token string">'upgrade'</span><span class="token punctuation">;</span>
+        proxy_set_header Host <span class="token variable">$host</span><span class="token punctuation">;</span>
+        proxy_cache_bypass <span class="token variable">$http_upgrade</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<p>
+ This code says: have the reverse proxy server (nginx) listen at port 80. When going to root /, listen for http requests as though you were actually http:// your private ip and the port your server is listening e.g @8000 or @6789 etc.</p>
+<p>
+ Learn more from nginx: 
+ <a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html" target="_blank">http://nginx.org/en/docs/http/ngx_http_proxy_module.html</a></p>
+<ol start="4">
+ 
+<li>Remove the defaults from <code>/etc/nginx/sites-available</code></li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">rm</span> default
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="5">
+ 
+<li>Create a symbolic link from sites-enabled to sites available:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">ln</span> -s /etc/nginx/sites-available/<span class="token punctuation">{</span><span class="token punctuation">{</span>project_name<span class="token punctuation">}</span><span class="token punctuation">}</span> /etc/nginx/sites-enabled/<span class="token punctuation">{</span><span class="token punctuation">{</span>project_name<span class="token punctuation">}</span><span class="token punctuation">}</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<p>
  6 Remove the defaults from&nbsp;/etc/nginx/sites-enabled/</p>
-<br>
-<pre data-language="bash">cd /etc/nginx/sites-enabled/
-sudo rm default
-</pre><h2>Part 5: Project Dependencies and PM2</h2><ol>
- <li>Install pm2 globally (<a href="https://www.npmjs.com/package/pm2.5" target="_blank">https://www.npmjs.com/package/pm2.5</a>) (<a href="https://www.npmjs.com/package/pm2" target="_blank">https://www.npmjs.com/package/pm2</a>). This is a production process manager that allows us to run node processes in the background.</li></ol>
-<pre data-language="bash">sudo npm install pm2 -g
-</pre><ol start="2">
- <li>Try some stuff with pm2!</li></ol>
-<pre data-language="bash">cd /var/www/{{project_name}}
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">cd</span> /etc/nginx/sites-enabled/
+<span class="token function">sudo</span> <span class="token function">rm</span> default
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<h2>Part 5: Project Dependencies and PM2</h2>
+<ol>
+ 
+<li>Install pm2 globally (<a href="https://www.npmjs.com/package/pm2.5" target="_blank">https://www.npmjs.com/package/pm2.5</a>) (<a href="https://www.npmjs.com/package/pm2" target="_blank">https://www.npmjs.com/package/pm2</a>). This is a production process manager that allows us to run node processes in the background.</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> pm2 -g
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="2">
+ 
+<li>Try some stuff with pm2!</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">cd</span> /var/www/<span class="token punctuation">{</span><span class="token punctuation">{</span>project_name<span class="token punctuation">}</span><span class="token punctuation">}</span>
 pm2 start server.js
 pm2 stop 0
 pm2 restart 0
-sudo service nginx reload &amp;&amp; sudo service nginx restart
-</pre><p>
- <strong>Probably not quite working yet but close</strong> 3) You might have some components that you still need to install: (get your dependencies from npm (assuming your git project has a package.json))</p>
-<pre data-language="bash">sudo npm install
-</pre><p>
- 3b) IF USING BOWER (assuming you have a bower.json)</p>
-<pre data-language="bash">sudo npm install bower -g
-sudo bower install --allow-root
-</pre><h2>Part 6: Mongod</h2><ol>
- <li>The last thing, setting up mongod! 2) Set up a key</li></ol>
-<pre>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-#version 14.04
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-</pre><ol start="3">
- <li>Setup mongodb in a source list</li></ol>
-<pre data-language="bash">echo "deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-#version 14.04
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
-</pre><p>
- That is all one line!&nbsp;</p><p>
+<span class="token function">sudo</span> <span class="token function">service</span> nginx reload <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">service</span> nginx restart
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<p>
+ <strong>Probably not quite working yet but close</strong> 
+</p>
+<ol start="3">
+  <li>
+    You might have some components that you still need to install: (get your dependencies from npm (assuming your git project has a package.json))
+  </li>
+</ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ul>
+  <li>
+    IF USING BOWER (assuming you have a bower.json)
+  </li>
+</ul>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> bower -g
+<span class="token function">sudo</span> bower <span class="token function">install</span> --allow-root
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<h2>Part 6: Mongodb</h2>
+<ol>
+  <li>The last thing, setting up mongodb!</li>
+  <li>Set up a key</li>
+</ol>
+<pre>#version 16.04 
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+</pre>
+<ol start="3">
+ 
+<li>Setup mongodb in a source list</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token comment" spellcheck="true">#version 12.04</span>
+<span class="token keyword">echo</span> <span class="token string">"deb [ arch=amd64 ] http://repo.mongodb.org/apt/ub... precise/mongodb-org/3.4 multiverse"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/mongodb-org-3.0.list
+<span class="token comment" spellcheck="true">#version 14.04</span>
+<span class="token keyword">echo</span> <span class="token string">"deb [ arch=amd64 ] http://repo.mongodb.org/apt/ub... trusty/mongodb-org/3.4 multiverse"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/mongodb-org-3.2.list
+<span class="token comment" spellcheck="true">#version 16.04</span>
+<span class="token keyword">echo</span> <span class="token string">"deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ub... xenial/mongodb-org/3.4 multiverse"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/mongodb-org-3.4.list
+</code>
+<div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<p>
+ That is all one line!&nbsp;</p>
+<p>
  &nbsp;4. Reupdate to integrate mongo</p>
-<pre data-language="bash">sudo apt-get update
-</pre><ol start="5">
- <li>install mongo</li></ol>
-<pre data-language="bash">sudo apt-get install -y mongodb-org
-</pre><ol start="6">
- <li>Start mongo (probably already started)</li></ol>
-<pre data-language="bash">sudo service mongod start
-</pre><ol start="7">
- <li>Restart your pm2 project and make sure the nginx config’s are working:</li></ol>
-<pre data-language="bash">pm2 stop 0
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="5">
+ 
+<li>install mongo</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y mongodb-org
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="6">
+ 
+<li>Start mongo (probably already started)</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash"><span class="token function">sudo</span> <span class="token function">service</span> mongod start
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="7">
+ 
+<li>Restart your pm2 project and make sure the nginx config’s are working:</li></ol>
+<pre data-language="bash" class=" code-toolbar  language-bash"><code class="  language-bash">pm2 stop 0
 pm2 restart 0
-sudo service nginx reload &amp;&amp; sudo service nginx restart
-</pre><ol start="8">
- <li>At this point, the nginx commands should have shown 2 OKs and you should be off and running. Go to the AWS public IP and see your site live!</li></ol>
+<span class="token function">sudo</span> <span class="token function">service</span> nginx reload <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">service</span> nginx restart
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre>
+<ol start="8">
+ 
+<li>At this point, the nginx commands should have shown 2 OKs and you should be off and running. Go to the AWS public IP and see your site live!</li></ol>
 								</div>
-
-
 						
+
+					
+				
