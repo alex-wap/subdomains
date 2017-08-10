@@ -66,10 +66,10 @@ if __name__ == "__main__":
 ```
 ---
 
-## 3. Configure the Nginx file for all apps.
+## 3. Configure a __single__ Nginx file for all apps.
 
 
-#### Overwite the existing Nginx file with this format. The first three server configs are for Node and the last two server configs are for Pylot.
+#### Overwite any existing Nginx files with this format in __**one**__ file. In this example file, the first three server configs are for Node and the last two server configs are for Pylot.
   * DOMAIN.com must be replaced by the domain name
   * PROJECT#.DOMAIN.com must be replaced by the desired subdomain name
   * PORT* must be replaced by the project's port
