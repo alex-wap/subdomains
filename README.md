@@ -10,13 +10,13 @@ This tutorial teaches developers how to deploy multiple apps to the same AWS EC2
 
 ## 1. First, configure at least one application for deployment. Follow the instructions below for the corresponding type of app.
 
-###[Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
+### [Node Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/node_deploy.html)
 
-###[Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
+### [Pylot Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/pylot_deploy.html)
 
-###[Rails Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
+### [Rails Deployment](https://htmlpreview.github.io/?https://github.com/alex-wap/subdomains/blob/master/rails_deploy.html)
 
-###[Django Deployment](https://github.com/alex-wap/DjangoDeployment)
+### [Django Deployment](https://github.com/alex-wap/DjangoDeployment)
 
 ---
 
