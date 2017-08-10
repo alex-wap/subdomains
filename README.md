@@ -66,10 +66,10 @@ if __name__ == "__main__":
 ```
 ---
 
-## 3. Configure a __single__ Nginx file for all apps.
+## 3. Configure one Nginx file for all apps.
 
 
-#### Overwite any existing Nginx files with this format in __**one**__ file. In this example file, the first three server configs are for Node and the last two server configs are for Pylot.
+#### Consolidate any existing Nginx files into a SINGLE file. Use a similar format as the example file below. There are two server configs for Node, one for Pylot, one for Rails, and one for Django.
   * DOMAIN.com must be replaced by the domain name
   * PROJECT#.DOMAIN.com must be replaced by the desired subdomain name
   * PORT* must be replaced by the project's port
